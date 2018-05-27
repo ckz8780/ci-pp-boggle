@@ -66,3 +66,36 @@ def path_to_word(grid, path):
         Add all of the letters on the path to a string
     '''
     return ''.join([grid[p] for p in path])
+    
+def search(grid, word_list):
+    '''
+        Search through the paths to locate words by matching
+        strings to words in a word list
+    '''
+    neighbors = all_grid_neighbors(grid)
+    paths = []
+    
+    def do_search(path):
+        word = path_to_word(grid, path)
+        
+        if word in word_list:
+            paths.append(path)
+        for next_pos in neighbors[path[-1]]:
+            if next_pos not in path:
+                do_search(path + [next_pos])
+                
+    for position in grid:
+        do_search([position])
+        
+    words = []
+    for path in paths:
+        words.append(path_to_word(grid, path))
+        
+    return set(words)
+    
+def get_dictionary(dict_file):
+    '''
+        Load a dictionary file (word list)
+    '''
+    with open(dict_file) as f:
+        return [w.strip().upper() for w in f]

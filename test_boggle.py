@@ -5,7 +5,7 @@ from string import ascii_uppercase
 
 class TestBoggle(unittest.TestCase):
     '''
-        Our test quite for Boggle Solver
+        Our test suite for Boggle Solver
     '''
     
     def test_can_create_an_empty_grid(self):
@@ -83,3 +83,40 @@ class TestBoggle(unittest.TestCase):
         
         self.assertEqual(one_letter_word, grid[(0,0)])
         self.assertEqual(two_letter_word, grid[(0,0)] + grid[(1,1)])
+        
+    def test_search_grid_for_words(self):
+        '''
+            Ensure that certain patterns can be found in a path_to_word
+        '''
+        
+        # First create a mock grid to test with:
+        grid = {
+            (0, 0): 'A',
+            (0, 1): 'B',
+            (1, 0): 'C',
+            (1, 1): 'D'
+        }
+        
+        # Now create some words to search for in the mock grid
+        two_letter_word = 'AB'
+        three_letter_word = 'ABC'
+        not_there = 'EEE'
+        
+        # Put them in a list to feed to the search function:
+        word_list = [two_letter_word, three_letter_word, not_there]
+        found_words = boggle.search(grid, word_list)
+        
+        # Now test whether they're there:
+        self.assertTrue(two_letter_word in found_words)
+        self.assertTrue(three_letter_word in found_words)
+        self.assertTrue(not_there not in found_words)
+        
+    def test_load_dictionary(self):
+        '''
+            Test that the get_dictionary function returns a dictionary
+            that has a length greater than zero
+        '''
+        
+        dictionary = boggle.get_dictionary('words.txt')
+        self.assertGreater(len(dictionary), 0)
+        
