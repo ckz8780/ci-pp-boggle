@@ -101,13 +101,13 @@ def get_dictionary(dict_file):
         Load a dictionary file (word list)
     '''
     with open(dict_file) as f:
-        return [w.strip().upper() for w in f]
+        return {w.strip().upper() for w in f}
         
 def main():
     '''
         This is the function that will run the whole project
     '''
-    grid = make_grid(3, 3)
+    grid = make_grid(4, 4)
     dictionary = get_dictionary('words.txt')
     words = search(grid, dictionary)
     display_words(words)
