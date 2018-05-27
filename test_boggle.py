@@ -45,3 +45,41 @@ class TestBoggle(unittest.TestCase):
         for letter in grid.values():
             self.assertIn(letter, ascii_uppercase)
         
+    def test_neighbors_of_a_position(self):
+        '''
+            Ensure that a position has 8 neighbors
+        '''
+        coords = (1, 2)
+        neighbors = boggle.neighbors_of_position(coords)
+        self.assertIn((0, 1), neighbors)
+        self.assertIn((0, 2), neighbors)
+        self.assertIn((0, 3), neighbors)
+        self.assertIn((1, 1), neighbors)
+        self.assertIn((1, 3), neighbors)
+        self.assertIn((2, 1), neighbors)
+        self.assertIn((2, 2), neighbors)
+        self.assertIn((2, 3), neighbors)
+        
+    def test_all_grid_neighbors(self):
+        '''
+            Ensure that all grid positions have neighbors
+        '''
+        grid = boggle.make_grid(2,2)
+        neighbors = boggle.all_grid_neighbors(grid)
+        self.assertEqual(len(neighbors), len(grid))
+        
+        for pos in grid: 
+            others = list(grid)
+            others.remove(pos)
+            self.assertListEqual(sorted(neighbors[pos]), sorted(others))
+            
+    def test_converting_a_path_to_a_word(self):
+        '''
+            Ensure that paths can be converted to words
+        '''
+        grid = boggle.make_grid(2, 2)
+        one_letter_word = boggle.path_to_word(grid, [(0, 0)])
+        two_letter_word = boggle.path_to_word(grid, [(0, 0), (1, 1)])
+        
+        self.assertEqual(one_letter_word, grid[(0,0)])
+        self.assertEqual(two_letter_word, grid[(0,0)] + grid[(1,1)])
