@@ -103,7 +103,9 @@ class TestBoggle(unittest.TestCase):
         not_there = 'EEE'
         
         # Put them in a list to feed to the search function:
-        word_list = [two_letter_word, three_letter_word, not_there]
+        full_words = [two_letter_word, three_letter_word, not_there]
+        stems = ['A', 'AB', 'E', 'EE']
+        word_list = full_words, stems
         found_words = boggle.search(grid, word_list)
         
         # Now test whether they're there:
