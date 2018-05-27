@@ -107,12 +107,14 @@ def main():
     grid = make_grid(3, 3)
     dictionary = get_dictionary('words.txt')
     words = search(grid, dictionary)
-    
-    for word in words:
+    display_words(words)
+
+def display_words(word_list):
+    for word in word_list:
         print(word)
         
-    print('Found {} words!'.format(len(words)))
-
+    print('All done! Found {} words!'.format(len(word_list)))
+        
 if __name__ == '__main__':
     main()
     
